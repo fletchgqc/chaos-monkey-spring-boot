@@ -71,7 +71,7 @@ public class SpringControllerAspectTest {
 
         AspectJProxyFactory factory = new AspectJProxyFactory(target);
         SpringRepositoryAspect repositoryAspect = new SpringRepositoryAspect(chaosMonkeyRequestScopeMock, null);
-        SpringServiceAspect serviceAspect = new SpringServiceAspect(chaosMonkeyRequestScopeMock, null);
+        SpringServiceAspect serviceAspect = new SpringServiceAspect(chaosMonkeyRequestScopeMock, null, null);
         SpringRestControllerAspect restControllerAspect = new SpringRestControllerAspect(chaosMonkeyRequestScopeMock, null);
         factory.addAspect(repositoryAspect);
         factory.addAspect(serviceAspect);

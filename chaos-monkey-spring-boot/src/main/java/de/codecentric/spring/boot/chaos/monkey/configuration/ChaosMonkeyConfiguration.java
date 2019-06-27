@@ -18,7 +18,9 @@ package de.codecentric.spring.boot.chaos.monkey.configuration;
 
 import de.codecentric.spring.boot.chaos.monkey.assaults.*;
 import de.codecentric.spring.boot.chaos.monkey.component.*;
-import de.codecentric.spring.boot.chaos.monkey.conditions.*;
+import de.codecentric.spring.boot.chaos.monkey.conditions.AttackControllerCondition;
+import de.codecentric.spring.boot.chaos.monkey.conditions.AttackRepositoryCondition;
+import de.codecentric.spring.boot.chaos.monkey.conditions.AttackRestControllerCondition;
 import de.codecentric.spring.boot.chaos.monkey.endpoints.ChaosMonkeyJmxEndpoint;
 import de.codecentric.spring.boot.chaos.monkey.endpoints.ChaosMonkeyRestEndpoint;
 import de.codecentric.spring.boot.chaos.monkey.watcher.*;
@@ -39,11 +41,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.util.StreamUtils;
 
-import javax.validation.constraints.Null;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
-import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * @author Benjamin Wilms
@@ -143,15 +143,13 @@ public class ChaosMonkeyConfiguration {
     }
 
     @Bean
-    @Conditional(AttackServiceCondition.class)
     public SpringServiceAspect serviceAspect(ChaosMonkeyRequestScope chaosMonkeyRequestScope) {
-        return new SpringServiceAspect(chaosMonkeyRequestScope, publisher());
+        return new SpringServiceAspect(chaosMonkeyRequestScope, publisher(), watcherProperties);
     }
 
     @Bean
-    @Conditional(AttackComponentCondition.class)
     public SpringComponentAspect componentAspect(ChaosMonkeyRequestScope chaosMonkeyRequestScope) {
-        return new SpringComponentAspect(chaosMonkeyRequestScope, publisher());
+        return new SpringComponentAspect(chaosMonkeyRequestScope, publisher(), watcherProperties);
     }
 
     @Bean
