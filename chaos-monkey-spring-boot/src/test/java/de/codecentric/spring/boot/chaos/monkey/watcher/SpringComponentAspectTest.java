@@ -29,7 +29,6 @@ import org.springframework.aop.aspectj.annotation.AspectJProxyFactory;
 
 import static org.mockito.Mockito.*;
 
-
 /**
  * @author Benjamin Wilms
  */
@@ -45,6 +44,7 @@ public class SpringComponentAspectTest {
 
     @Mock
     private MetricEventPublisher metricsMock;
+
     private String pointcutName = "execution.DemoComponent.sayHello";
     private String simpleName = "de.codecentric.spring.boot.demo.chaos.monkey.component.DemoComponent.sayHello";
 

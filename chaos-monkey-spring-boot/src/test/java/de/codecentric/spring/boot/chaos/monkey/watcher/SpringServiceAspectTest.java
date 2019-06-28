@@ -34,6 +34,7 @@ import static org.mockito.Mockito.*;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class SpringServiceAspectTest {
+
     private DemoService target = new DemoService();
     private WatcherProperties watcherProperties = new WatcherProperties();
     private AspectJProxyFactory factory = new AspectJProxyFactory(target);
@@ -44,9 +45,9 @@ public class SpringServiceAspectTest {
     @Mock
     private MetricEventPublisher metricsMock;
 
-
     private String pointcutName = "execution.DemoService.sayHello";
     private String simpleName = "de.codecentric.spring.boot.demo.chaos.monkey.service.DemoService.sayHello";
+
 
     @Test
     public void chaosMonkeyIsCalledWhenEnabledInConfig() {

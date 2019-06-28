@@ -131,13 +131,11 @@ public class ChaosMonkeyConfiguration {
     }
 
     @Bean
-    @Conditional(AttackControllerCondition.class)
     public SpringControllerAspect controllerAspect(ChaosMonkeyRequestScope chaosMonkeyRequestScope) {
         return new SpringControllerAspect(chaosMonkeyRequestScope, publisher());
     }
 
     @Bean
-    @Conditional(AttackRestControllerCondition.class)
     public SpringRestControllerAspect restControllerAspect(ChaosMonkeyRequestScope chaosMonkeyRequestScope) {
         return new SpringRestControllerAspect(chaosMonkeyRequestScope, publisher());
     }
@@ -153,7 +151,6 @@ public class ChaosMonkeyConfiguration {
     }
 
     @Bean
-    @Conditional(AttackRepositoryCondition.class)
     public SpringRepositoryAspect repositoryAspect(ChaosMonkeyRequestScope chaosMonkeyRequestScope) {
         return new SpringRepositoryAspect(chaosMonkeyRequestScope, publisher());
     }
