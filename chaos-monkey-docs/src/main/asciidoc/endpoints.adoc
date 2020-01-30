@@ -114,18 +114,8 @@ Chaos Monkey is enabled
 Chaos Monkey is disabled
 ----
 ===== GET Watchers
-[[watcher]]
-[source,json,subs="verbatim,attributes"]
-./chaosmonkey/watchers - Response 200 OK
-----
-{
-"controller": true,
-"restController": false,
-"service": true,
-"repository": false,
-"component": false
-}
-----
+GET Watchers is documented with OpenAPI 3, see our link:swagger-ui/[OpenAPI documentation]. (We hope to document all rest endpoints there in the near future).
+
 ===== POST Watchers
 [[watcherspost]]
 ====== Request to enable/disable Watchers
