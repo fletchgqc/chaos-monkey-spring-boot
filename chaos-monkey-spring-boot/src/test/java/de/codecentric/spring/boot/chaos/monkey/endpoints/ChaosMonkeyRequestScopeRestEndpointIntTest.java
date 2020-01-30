@@ -19,12 +19,15 @@ package de.codecentric.spring.boot.chaos.monkey.endpoints;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.junit.Assert.assertEquals;
 
+import com.atlassian.oai.validator.OpenApiInteractionValidator;
+import com.atlassian.oai.validator.springweb.client.OpenApiValidationClientHttpRequestInterceptor;
 import de.codecentric.spring.boot.chaos.monkey.configuration.AssaultException;
 import de.codecentric.spring.boot.chaos.monkey.configuration.AssaultProperties;
 import de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeyProperties;
 import de.codecentric.spring.boot.chaos.monkey.configuration.ChaosMonkeySettings;
 import de.codecentric.spring.boot.chaos.monkey.configuration.WatcherProperties;
 import de.codecentric.spring.boot.demo.chaos.monkey.ChaosDemoApplication;
+import java.util.Collections;
 import lombok.Data;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,6 +55,11 @@ class ChaosMonkeyRequestScopeRestEndpointIntTest {
   @Autowired private TestRestTemplate testRestTemplate;
 
   private String baseUrl;
+
+  private final String openApiPath = "openapi.yaml";
+
+  private final OpenApiValidationClientHttpRequestInterceptor validationInterceptor = new OpenApiValidationClientHttpRequestInterceptor(
+      OpenApiInteractionValidator.createForSpecificationUrl(openApiPath).build());
 
   @BeforeEach
   void setUp() throws Exception {
@@ -108,12 +116,17 @@ class ChaosMonkeyRequestScopeRestEndpointIntTest {
   // Watcher Tests
   @Test
   void getWatcherConfiguration() {
+    // openapi validation
+    testRestTemplate.getRestTemplate().setInterceptors(Collections.singletonList(validationInterceptor));
+
     ResponseEntity<WatcherProperties> result =
         testRestTemplate.getForEntity(baseUrl + "/watchers", WatcherProperties.class);
 
     assertEquals(HttpStatus.OK, result.getStatusCode());
     assertEquals(
         chaosMonkeySettings.getWatcherProperties().toString(), result.getBody().toString());
+
+    testRestTemplate.getRestTemplate().setInterceptors(Collections.emptyList());
   }
 
   @Test

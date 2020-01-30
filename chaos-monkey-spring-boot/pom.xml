@@ -128,9 +128,24 @@
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
-
-
+        <dependency>
+            <groupId>com.atlassian.oai</groupId>
+            <artifactId>swagger-request-validator-core</artifactId>
+            <version>${swagger-request-validator.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.oai</groupId>
+            <artifactId>swagger-request-validator-restassured</artifactId>
+            <version>${swagger-request-validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.oai</groupId>
+            <artifactId>swagger-request-validator-spring-web-client</artifactId>
+            <version>${swagger-request-validator.version}</version>
+        </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <!-- Building CM4SB external JAR - run it as external dependency-->
