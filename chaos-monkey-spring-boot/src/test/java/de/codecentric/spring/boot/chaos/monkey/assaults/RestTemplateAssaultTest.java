@@ -16,8 +16,6 @@
 
 package de.codecentric.spring.boot.chaos.monkey.assaults;
 
-import static org.mockito.Mockito.verify;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Collections;
@@ -40,7 +38,7 @@ class RestTemplateAssaultTest {
     restTemplate.setInterceptors(
         Collections.singletonList(new ResponseModifyingRequestInterceptor()));
     Assertions.assertThatThrownBy(
-            () ->
+        () ->
                 restTemplate.getForEntity(
                     "https://jsonplaceholder.typicode.com/todos/1", String.class))
         .isInstanceOf(RestClientException.class)

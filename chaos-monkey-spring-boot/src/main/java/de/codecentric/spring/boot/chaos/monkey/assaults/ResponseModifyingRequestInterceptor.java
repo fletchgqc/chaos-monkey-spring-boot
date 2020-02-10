@@ -43,6 +43,7 @@ public class ResponseModifyingRequestInterceptor implements ClientHttpRequestInt
     }
 
     @Override
-    public void close() {}
+    public void close() {
+    }
   }
 }

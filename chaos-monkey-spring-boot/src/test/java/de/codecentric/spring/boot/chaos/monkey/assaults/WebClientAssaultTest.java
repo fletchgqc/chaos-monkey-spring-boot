@@ -48,7 +48,7 @@ class WebClientAssaultTest {
     WebClient webClient = WebClient.builder().filter(serverErrorFilterFunction).build();
 
     Assertions.assertThatThrownBy(
-            () ->
+        () ->
                 webClient
                     .get()
                     .uri("https://jsonplaceholder.typicode.com/todos/1")
@@ -67,7 +67,7 @@ class WebClientAssaultTest {
     WebClient mutatedWebClient = webClient.mutate().filter(serverErrorFilterFunction).build();
 
     Assertions.assertThatThrownBy(
-            () ->
+        () ->
                 mutatedWebClient
                     .get()
                     .uri("https://jsonplaceholder.typicode.com/todos/1")
