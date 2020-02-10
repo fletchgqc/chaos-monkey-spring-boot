@@ -29,6 +29,7 @@ import de.codecentric.spring.boot.chaos.monkey.configuration.WatcherProperties;
 import de.codecentric.spring.boot.demo.chaos.monkey.ChaosDemoApplication;
 import java.util.Collections;
 import lombok.Data;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +59,9 @@ class ChaosMonkeyRequestScopeRestEndpointIntTest {
 
   private final String openApiPath = "openapi.yaml";
 
-  private final OpenApiValidationClientHttpRequestInterceptor validationInterceptor = new OpenApiValidationClientHttpRequestInterceptor(
-      OpenApiInteractionValidator.createForSpecificationUrl(openApiPath).build());
+  private final OpenApiValidationClientHttpRequestInterceptor validationInterceptor =
+      new OpenApiValidationClientHttpRequestInterceptor(
+          OpenApiInteractionValidator.createForSpecificationUrl(openApiPath).build());
 
   @BeforeEach
   void setUp() throws Exception {
@@ -117,7 +119,9 @@ class ChaosMonkeyRequestScopeRestEndpointIntTest {
   @Test
   void getWatcherConfiguration() {
     // openapi validation
-    testRestTemplate.getRestTemplate().setInterceptors(Collections.singletonList(validationInterceptor));
+    testRestTemplate
+        .getRestTemplate()
+        .setInterceptors(Collections.singletonList(validationInterceptor));
 
     ResponseEntity<WatcherProperties> result =
         testRestTemplate.getForEntity(baseUrl + "/watchers", WatcherProperties.class);
@@ -125,8 +129,6 @@ class ChaosMonkeyRequestScopeRestEndpointIntTest {
     assertEquals(HttpStatus.OK, result.getStatusCode());
     assertEquals(
         chaosMonkeySettings.getWatcherProperties().toString(), result.getBody().toString());
-
-    testRestTemplate.getRestTemplate().setInterceptors(Collections.emptyList());
   }
 
   @Test
@@ -299,5 +301,10 @@ class ChaosMonkeyRequestScopeRestEndpointIntTest {
   private ResponseEntity<String> postHttpEntity(HttpEntity value) {
 
     return this.testRestTemplate.postForEntity(baseUrl, value, String.class);
+  }
+
+  @AfterEach
+  void tearDown() {
+    testRestTemplate.getRestTemplate().setInterceptors(Collections.emptyList());
   }
 }
