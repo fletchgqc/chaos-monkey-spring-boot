@@ -66,6 +66,47 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>copy-swagger-ui</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                        <outputDirectory>${basedir}/target/generated-docs/swagger-ui</outputDirectory>
+                        <resources>
+                            <resource>
+                                <directory>src/main/swagger-ui</directory>
+                            </resource>
+                        </resources>
+                        </configuration>
+                    </execution>
+                    <!-- It would be better if this file lived in this project. But then we wouldn't be able to access it from the Java tests -->
+                    <execution>
+                        <id>copy-openapi-file</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                        <outputDirectory>${basedir}/target/generated-docs/swagger-ui</outputDirectory>
+                        <resources>
+                            <resource>
+                                <directory>../chaos-monkey-spring-boot/src/test/resources</directory>
+                                <includes>
+                                    <include>openapi.yaml</include>
+                                </includes>
+                            </resource>
+                        </resources>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <profiles>
